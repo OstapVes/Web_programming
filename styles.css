@@ -1,0 +1,7 @@
+ @import "./normalize.min.css";
+ @import "./globals.css";
+ @import "./header.css";
+ @import "./hero.css";
+ @import "./latest_article.css";
+ @import "./testimonials.css";
+ @import "./footer.css";

@@ -1,0 +1,43 @@
+.hero {
+    background: url(/WEB.LAB1.NEW/images/image.svg) no-repeat right 157px top 195px;
+    height: 700px;
+    width: 1600px;
+  }
+.hero__title {
+    height: 82.27200317382812px;
+    width: 241.66123962402344px;
+    margin-top: 223px;
+    margin-left: 193px;
+
+
+} 
+.hero__line{
+    margin-left: 1px;
+    height: 2px;
+    width: 56px;
+    margin-top: 32.22px;
+    margin-left: 193px;
+    background-color: #000000;
+}
+.hero__paragraph {
+    height: 107.33px;
+    width: 360.13px;
+    margin-top: 39.75px;
+    margin-left: 193px;
+    color: #7D7987;
+    font-size: 18px;
+    font-weight: 100;
+    
+}
+.hero__button {
+    border-radius: 0px;
+    color: #458FF6;
+    height: 56px;
+    width: 200px;
+    margin-top: 13px;
+    margin-left: 193px;
+    border-radius: 30px;
+    background: transparent;
+    border: 2px solid #458FF6;
+
+}
