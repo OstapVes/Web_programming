@@ -1,0 +1,44 @@
+.footer-T {
+    margin-top: 77px;
+    margin-left: 180px;
+    border-radius: 50%;
+    background: #fff;
+    width: 41px;
+    height: 41px;
+    color:#5B9BF3;
+    text-align: center;
+    position: relative;
+    font-size: 19px;
+    font-weight: 300;
+  
+}
+.footer-f {
+    display: flex;
+    background: url(/WEB.LAB1.NEW/images/footer-square.svg) no-repeat right 1410px top 75px;
+}
+.footer {
+    height: 165px;
+    width: 1600px;
+    background-color: #67C3F3;
+    color: #fff;
+    display: flex;
+}
+.footer__title {
+    display: flex;
+    margin-top: 87px;
+    margin-left: 20px;
+    margin-right: 377px;
+    font-size: 19px;
+    font-weight: 300;
+}
+.footer__word {
+    height: 18.98000144958496px;
+    width: 89.99624633789062px;
+    margin-top: 87px;
+    margin-right: 180px;
+    mix-blend-mode: normal;
+    font-size: 19px;
+    font-weight: 300;
+
+    
+}
