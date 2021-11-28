@@ -1,5 +1,5 @@
 const BASE_URL = "http://localhost:5000";
-const RES_URL = `${BASE_URL}/fish`;
+const RES_URL = `${BASE_URL}/lamp`;
 
 const baseRequest = async ({ urlPath: url_path = "", method = "GET", body = null }) => {
     try {
