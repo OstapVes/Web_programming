@@ -1,0 +1,3 @@
+export const FISH_CARD_WIDTH = 170;
+export const FISH_CARD_MARGIN = 10;
+export const FISH_CARD_SIZE = FISH_CARD_MARGIN * 2 + FISH_CARD_WIDTH;
