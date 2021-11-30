@@ -1,66 +1,91 @@
 import {
-  EDIT_BUTTON_PREFIX,
-  addItemToPage,
-  clearInputs,
-  renderItemsList,
-  getInputValues,
+    addItemToPage,
+    clearInputs,
+    renderItemsList,
+    getInputValues,
+    EDIT_BUTTON_PREFIX,
 } from "./dom_util.js";
-import { deleteHamster, getAllHamsters, postHamster, updateHamster } from "./api.js";
+import { getAllLamps, postLamp, editLamp, deleteLamp } from './api.js'
 
 const submitButton = document.getElementById("submit_button");
 const findButton = document.getElementById("find_button");
 const cancelFindButton = document.getElementById("cancel_find_button");
 const findInput = document.getElementById("find_input");
 
-let hamsters = [];
 
-const onEditItem = async (e) => {
-  const itemId = e.target.id.replace(EDIT_BUTTON_PREFIX, "");
+let lamps = [];
 
-  await updateHamster(itemId, getInputValues())
+// const addItem = ({ name, power, number, price }) => {
+//    const generatedId = uuid.v1();
 
-  clearInputs();
-  
-  refetchAllHamsters();
-};
+//    const newItem = {
+//        id: generatedId,
+//        name,
+//        power,
+//        number,
+//        price,
+//    };
 
-const onRemoveItem = (id) => deleteHamster(id).then(refetchAllHamsters);
+//    lamps.push(newItem);
 
-export const refetchAllHamsters = async () => {
-  const allHamsters = await getAllHamsters();
+//    addItemToPage(newItem);
+// }
 
-  hamsters = allHamsters;
+const onEditItem = (element) => {
+    const id = element.target.id.replace(EDIT_BUTTON_PREFIX, "");
 
-  renderItemsList(hamsters, onEditItem, onRemoveItem);
+    const { name, power, number, price } = getInputValues();
+
+    clearInputs();
+
+    editLamp(id, {
+        name, 
+        power, 
+        number, 
+        price,
+    }).then(refetchAllLamps);
+}
+
+const onRemoveItem = (id) => deleteLamp(id).then(refetchAllLamps);
+
+export const refetchAllLamps = async () => {
+    const allLamps = await getAllLamps();
+
+    lamps = allLamps;
+
+    renderItemsList(lamps, onEditItem, onRemoveItem);
 };
 
 submitButton.addEventListener("click", (event) => {
-  // Prevents default page reload on submit
-  event.preventDefault();
+    // Prevents default page reload on submit
+    event.preventDefault();
 
-  const { title, description } = getInputValues();
+    const { name, power, number, price } = getInputValues();
 
-  clearInputs();
+    clearInputs();
 
-  postHamster({
-    title,
-    description,
-  }).then(refetchAllHamsters);
+    postLamp({
+        name,
+        power,
+        number,
+        price,
+    }).then(refetchAllLamps);
 });
 
 findButton.addEventListener("click", () => {
-  const foundHamsters = hamsters.filter(
-    (hamster) => hamster.title.search(findInput.value) !== -1
-  );
+    const foundLamp = lamps.filter(
+        (lamp) => lamp.name.search(findInput.value) !== -1
+    );
 
-  renderItemsList(foundHamsters, onEditItem, onRemoveItem);
+    renderItemsList(foundLamp, onEditItem, onRemoveItem);
 });
 
 cancelFindButton.addEventListener("click", () => {
-  renderItemsList(hamsters, onEditItem, onRemoveItem);
+    renderItemsList(lamps, onEditItem, onRemoveItem);
 
-  findInput.value = "";
+    findInput.value = "";
 });
 
+
 // main code
-refetchAllHamsters();
+refetchAllLamps();
