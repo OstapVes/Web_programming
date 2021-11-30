@@ -3,9 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DragNDrop App</title>
+    <title>CRUD JS App</title>
 
-    <link rel="stylesheet" href="./css/custom.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/custom.css') }}" />
+    <link rel="icon" href="data:;base64,=">
 
     <!-- Bootstrap 5 -->
     <link
@@ -34,17 +35,21 @@
           <form id="add_form" class="bg-light">
             <h3 class="mb-3">Create card</h3>
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Type</label>
-              <input type="text" class="form-control" id="title_input" />
+              <label for="exampleInputEmail1" class="form-label">Name</label>
+              <input type="text" class="form-control" id="name_input" required/>
             </div>
             <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label"
-                >Power(in watts)</label
-              >
-              <input type="text" class="form-control" id="description_input" />
+              <label for="exampleInputPassword1" class="form-label">Power</label>
+              <input type="text" class="form-control" id="power_input" required />
             </div>
-            
-            
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Number</label>
+              <input type="text" class="form-control" id="number_input" required />
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Price</label>
+              <input type="text" class="form-control" id="price_input" required />
+            </div>
             <button id="submit_button" type="submit" class="btn btn-primary">
               Submit
             </button>
@@ -56,13 +61,37 @@
             <button id="find_button" type="button" class="btn btn-primary mt-4">
               Find
             </button>
-            <button id="cancel_find_button" type="button" class="btn btn-danger mt-4">
+            <button
+              id="cancel_find_button"
+              type="button"
+              class="btn btn-danger mt-4"
+            >
               Cancel
             </button>
+          </div>
+
+          <div class="mt-5">
+            <select id="propertyForSorting" value="name">
+              <option value="name">Height</option>
+              <option value="passengers">Price</option>
+            </select>
+            <select id="orderSelector" value="ASC">
+              <option value="ASC">ASC</option>
+              <option value="DESC">DESC</option>
+            </select>
+          </div>
+
+          <div class="mt-5">
+            <select id="propertyForTotalValue" value="height">
+              <option value="height" id="price_opt">Height</option>
+              <option value="price" id="weight_opt">Price</option>
+            </select>
+            <lebel id="totalValue"></lebel>
           </div>
         </div>
 
         <ul id="items_container" class="col-md-4 mt-5 mt-md-2 mx-auto">
+
         </ul>
 
         <div class="col-md-4">
@@ -71,7 +100,7 @@
               <div class="text-center">
                 <img
                   class="delete-section__icon mb-4"
-                  src="./assets/basket.svg"
+                  src="{{ url_for('static', filename= 'assets/basket.svg') }}"
                   alt="basket"
                 />
                 <div>Drop here to delete</div>
@@ -82,6 +111,7 @@
       </div>
     </div>
 
-    <script type="module" src="./js/index.js"></script>
+    <script type="module" src="{{ url_for('static', filename = 'js/index.js') }}"></script>
   </body>
 </html>
+
