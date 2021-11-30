@@ -1,37 +1,35 @@
-const BASE_URL = "http://localhost:1337/api";
-const RESOURSE_URL = `${BASE_URL}/hamster`;
+const BASE_URL = "http://localhost:5000";
+const RESOURSE_URL = `${BASE_URL}/lamp`;
 
-const baseRequest = async ({ urlPath = "", method = "GET", body = null }) => {
-  try {
-    const reqParams = {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+const baseRequest = async ({ urlPath = "", method = 'GET', body = null }) => {
+    try {
+        const reqParams = {
+            method,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        };
 
-    if (body) {
-      reqParams.body = JSON.stringify(body);
+        if (body) {
+            reqParams.body = JSON.stringify(body);
+        }
+
+        return await fetch(`${RESOURSE_URL}${urlPath}`, reqParams);
+    } catch (error) {
+
     }
+}
 
-    return await fetch(`${RESOURSE_URL}${urlPath}`, reqParams);
-  } catch (error) {
-    console.error("HTTP ERROR: ", error);
-  }
-};
+export const getAllLamps = async () => {
+    const rawRes = await baseRequest({ method: "GET" });
 
-// public functionality
+    return rawRes.json();
+}
 
-export const getAllHamsters = async () => {
-  const rawResponse = await baseRequest({ method: "GET" });
+export const postLamp = (body) => baseRequest({ method: "POST", body });
 
-  return await rawResponse.json();
-};
+export const editLamp = (id, body) => 
+    baseRequest({ urlPath: `/${id}`, method: "PUT", body });
 
-export const postHamster = (body) => baseRequest({ method: "POST", body });
-
-export const updateHamster = (id, body) =>
-  baseRequest({ urlPath: `/${id}`, method: "PATCH", body });
-
-export const deleteHamster = (id) =>
-  baseRequest({ urlPath: `/${id}`, method: "DELETE" });
+export const deleteLamp = (id) => 
+    baseRequest({ urlPath: `/${id}`, method: "DELETE" });
