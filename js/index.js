@@ -1,66 +1,121 @@
 import {
-  EDIT_BUTTON_PREFIX,
-  addItemToPage,
-  clearInputs,
-  renderItemsList,
-  getInputValues,
+    addItemToPage,
+    clearInputs,
+    renderItemsList,
+    getInputValues,
+    sortItems,
+    countValues,
 } from "./dom_util.js";
-import { deleteHamster, getAllHamsters, postHamster, updateHamster } from "./api.js";
 
 const submitButton = document.getElementById("submit_button");
 const findButton = document.getElementById("find_button");
 const cancelFindButton = document.getElementById("cancel_find_button");
 const findInput = document.getElementById("find_input");
+const sortPropertySelector = document.getElementById("propertyForSorting");
+const sortOrderSelector = document.getElementById("orderSelector");
+const totalValueSelector = document.getElementById("propertyForTotalValue");
+const nameInput = document.getElementById("name_input");
+const powerInput = document.getElementById("power_input");
+const numberInput = document.getElementById("number_input");
+const errorName = document.getElementById("error_name");
+const errorPrice = document.getElementById("error_price");
+const errorNumber= document.getElementById("error_number");
 
-let hamsters = [];
+let lamp = [];
 
-const onEditItem = async (e) => {
-  const itemId = e.target.id.replace(EDIT_BUTTON_PREFIX, "");
+const addItem = ({ name, power, number, price }) => {
+    const generatedId = uuid.v1();
 
-  await updateHamster(itemId, getInputValues())
+    const newItem = {
+        id: generatedId,
+        name,
+        power,
+        number,
+        price,
+    };
 
-  clearInputs();
-  
-  refetchAllHamsters();
-};
+    lamp.push(newItem);
 
-const onRemoveItem = (id) => deleteHamster(id).then(refetchAllHamsters);
-
-export const refetchAllHamsters = async () => {
-  const allHamsters = await getAllHamsters();
-
-  hamsters = allHamsters;
-
-  renderItemsList(hamsters, onEditItem, onRemoveItem);
-};
+    addItemToPage(newItem);
+}
 
 submitButton.addEventListener("click", (event) => {
-  // Prevents default page reload on submit
-  event.preventDefault();
+    event.preventDefault();
 
-  const { title, description } = getInputValues();
+    const invalidSymbols = ["@", "#", "<", ">", "/", "\\", "*", "+", "-", "=", ")", "(", "[", "]",
+        "{", "}", "&", "^", "%", "$","!", "~"];
 
-  clearInputs();
 
-  postHamster({
-    title,
-    description,
-  }).then(refetchAllHamsters);
+    if(nameInput.value == 0){
+        errorName.textContent = "Please enter a name";
+        window.alert("We need to know name of the lamp!");
+    }
+    else if(invalidSymbols.some(symbol =>nameInput.value.includes(symbol))){
+        errorName.textContent = "Wrong symbols";
+        window.alert("Oops, something went wrong");
+    }
+    else if(powerInput.value == 0){
+        errorNumber.textContent = "Please enter power";
+        window.alert("We need to know the power of the lamp!");
+    }
+    else if(numberInput.value == 0){
+        errorPrice.textContent = "Please enter a number of diode lamps";
+        window.alert("We need to know the price of the lamp!");
+    }
+    else if(invalidSymbols.some(symbol =>nameInput.value.includes(symbol))){
+        errorPrice.textContent = "Wrong symbols";
+        window.alert("Oops, something went wrong");
+    }
+    else if(isNaN(priceInput.value)){
+        errorPrice.textContent = "Please enter a price";
+        window.alert("The entered value is not a price!");
+    }
+    else{
+    const {name, power, number, price} = getInputValues();
+
+    clearInputs();
+
+    addItem({
+        name,
+        power,
+        number,
+        price
+    })
+
+    errorPrice.textContent = "";
+    errorName.textContent = "";
+    errorNumber.textContent = "";
+}
 });
 
 findButton.addEventListener("click", () => {
-  const foundHamsters = hamsters.filter(
-    (hamster) => hamster.title.search(findInput.value) !== -1
-  );
+    const foundLamp = lamp.filter(
+        (lamp) => lamp.name.search(findInput.value) !== -1
+    );
 
-  renderItemsList(foundHamsters, onEditItem, onRemoveItem);
+    renderItemsList(foundLamp);
 });
 
 cancelFindButton.addEventListener("click", () => {
-  renderItemsList(hamsters, onEditItem, onRemoveItem);
+    renderItemsList(lamp);
 
-  findInput.value = "";
+    findInput.value = "";
 });
 
+sortPropertySelector.addEventListener("change", () => {
+    sortItems({ lamp, property: sortPropertySelector.value, order: sortOrderSelector.value })
+})
+
+sortOrderSelector.addEventListener("change", () => {
+    sortItems({ lamp, property: sortPropertySelector.value, order: sortOrderSelector.value })
+})
+
+totalValueSelector.addEventListener("change", () => {
+    console.log(totalValueSelector.value)
+    countValues({lamp, property: totalValueSelector.value })
+})
+
 // main code
-refetchAllHamsters();
+renderItemsList(lamp);
+
+countValues({ lamp, property: "price" })
