@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DragNDrop App</title>
+    <title>CRUD JS App</title>
 
     <link rel="stylesheet" href="./css/custom.css" />
 
@@ -35,13 +35,22 @@
             <h3 class="mb-3">Create card</h3>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Type</label>
-              <input type="text" class="form-control" id="title_input" />
+              <input type="text" class="form-control" id="name_input" required/>
+              <span class="error" id="error_name"></span>
             </div>
             <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label"
-                >Power(in watts)
-                </label>
-              <input type="text" class="form-control" id="description_input" />
+              <label for="exampleInputPassword1" class="form-label">Power(in watts)</label>
+              <input type="text" class="form-control" id="power_input" required />
+              <span class="error" id="error_power"></span>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Number of diode lamps</label>
+              <input type="text" class="form-control" id="number_input" required />
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Price</label>
+              <input type="text" class="form-control" id="price_input" required />
+              <span class="error" id="error_price"></span>
             </div>
             <button id="submit_button" type="submit" class="btn btn-primary">
               Submit
@@ -54,22 +63,37 @@
             <button id="find_button" type="button" class="btn btn-primary mt-4">
               Find
             </button>
-            <button id="cancel_find_button" type="button" class="btn btn-danger mt-4">
+            <button
+              id="cancel_find_button"
+              type="button"
+              class="btn btn-danger mt-4"
+            >
               Cancel
             </button>
-            
           </div>
+
           <div class="mt-5">
-            
+            <select id="propertyForSorting" value="name">
+              <option value="name">Power</option>
+              <option value="passengers">Price</option>
+            </select>
             <select id="orderSelector" value="ASC">
               <option value="ASC">ASC</option>
               <option value="DESC">DESC</option>
             </select>
           </div>
+
+          <div class="mt-5">
+            <select id="propertyForTotalValue" value="power">
+              <option value="power" id="price_opt">Power</option>
+              <option value="price" id="weight_opt">Price</option>
+            </select>
+            <lebel id="totalValue"></lebel>
+          </div>
         </div>
-        
 
         <ul id="items_container" class="col-md-4 mt-5 mt-md-2 mx-auto">
+
         </ul>
 
         <div class="col-md-4">
